@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
-from exceptions import UserAlreadyExistError, UserNotFoundError
+from exceptions import *
 import bcrypt, models, schemas
 
-# usuário
+# User
 def check_user(db: Session, user: schemas.UserLoginSchema):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user is None:
@@ -49,3 +49,47 @@ def delete_user_by_id(db: Session, user_id: int):
     db.delete(db_user)
     db.commit()
     return
+
+# Category
+def get_all_categories(db: Session, offset: int, limit: int):
+    return db.query(models.Category).offset(offset).limit(limit).all()
+
+def get_category_by_id(db: Session, category_id: int):
+    db_category = db.query(models.Category).get(category_id)
+    if db_category is None:
+        raise CategoryNotFoundError
+    return db_category
+
+def get_category_by_name(db: Session, category_name: str):
+    return db.query(models.Category).filter(models.Category.name == category_name).first()
+
+def create_category(db: Session, category: schemas.CategoryBase):
+    db_category = get_category_by_name(db, category.name)
+    if db_category is not None:
+        raise CategoryAlreadyExistError
+    db_category = models.Category(**category.dict())
+    db.add(db_category)
+    db.commit()
+    db.refresh(db_category)
+    return db_category
+
+def update_category(db: Session, category_id: int, category: schemas.CategoryBase):
+    db_category = get_category_by_id(db, category_id)
+    db_category.name = category.name
+    db_category.description = category.description
+    db_category.is_active = category.is_active
+    db_category.id_user = category.id_user
+    db.commit()
+    db.refresh(db_category)
+    return db_category
+
+def delete_category_by_id(db: Session, category_id: int):
+    db_category = get_category_by_id(db, category_id)
+    db.delete(db_category)
+    db.commit()
+    return
+
+# Goals
+
+
+# Report

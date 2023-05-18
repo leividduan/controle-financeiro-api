@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 
-from exceptions import UserException
+from exceptions import UserException, CategoryException
 from database import get_db, engine
 from auth.auth_handler import signJWT
 from auth.auth_bearer import JWTBearer
@@ -11,7 +11,9 @@ import crud, models, schemas
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
-@app.post("api/users/signup", tags=["User"])
+# User
+
+@app.post("/api/users/signup", tags=["User"])
 async def create_user_signup(user: schemas.UserCreate = Body(...), db: Session= Depends(get_db)):
     try:
         crud.create_user(db, user)
@@ -19,7 +21,7 @@ async def create_user_signup(user: schemas.UserCreate = Body(...), db: Session= 
     except UserException as cie:
         raise HTTPException(**cie.__dict__)
     
-@app.post("api/users/login", tags=["User"])
+@app.post("/api/users/login", tags=["User"])
 async def user_login(user: schemas.UserLoginSchema = Body(...), db: Session= Depends(get_db)):
     if crud.check_user(db, user):
         return signJWT(user.email)
@@ -27,7 +29,6 @@ async def user_login(user: schemas.UserLoginSchema = Body(...), db: Session= Dep
         "error": "E-mail ou senha incorretos!"
     }
 
-# usuário
 @app.get("/api/users/{user_id}",  tags=["User"], response_model=schemas.User, dependencies=[Depends(JWTBearer())])
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     try:
@@ -55,4 +56,39 @@ def delete_user_by_id(user_id: int, db: Session = Depends(get_db)):
     except UserException as cie:
         raise HTTPException(**cie.__dict__)
 
-#
+# Category
+
+@app.get("/api/categories", tags=["Category"], response_model=schemas.PaginatedCategory, dependencies=[Depends(JWTBearer())])
+def get_all_categories(db: Session = Depends(get_db), offset: int = 0, limit: int = 10):
+    db_categories = crud.get_all_categories(db, offset, limit)
+    response = {"limit": limit, "offset": offset, "data": db_categories}
+    return response
+
+
+@app.get("/api/categories/{category_id}",  tags=["Category"], response_model=schemas.Category, dependencies=[Depends(JWTBearer())])
+def get_category_by_id(category_id: int, db: Session = Depends(get_db)):
+    try:
+        return crud.get_category_by_id(db, category_id)
+    except CategoryException as cie:
+        raise HTTPException(**cie.__dict__)
+    
+@app.post("/api/categories", tags=["Category"], dependencies=[Depends(JWTBearer())])
+async def create_category(category: schemas.CategoryBase = Body(...), db: Session= Depends(get_db)):
+    try:
+        return crud.create_category(db, category)
+    except CategoryException as cie:
+        raise HTTPException(**cie.__dict__)
+
+@app.put("/api/categories/{category_id}", tags=["Category"], response_model=schemas.Category, dependencies=[Depends(JWTBearer())] )
+def update_category(category_id: int, category: schemas.CategoryBase, db: Session = Depends(get_db)):
+    try:
+        return crud.update_category(db, category_id, category)
+    except CategoryException as cie:
+        raise HTTPException(**cie.__dict__)
+
+@app.delete("/api/categories/{category_id}", tags=["Category"], dependencies=[Depends(JWTBearer())] )
+def delete_category_by_id(category_id: int, db: Session = Depends(get_db)):
+    try:
+        return crud.delete_category_by_id(db, category_id)
+    except CategoryException as cie:
+        raise HTTPException(**cie.__dict__)

@@ -27,3 +27,21 @@ class PaginatedUser(BaseModel):
     limit: int
     offset: int
     data: List[User]
+
+# Category
+
+class CategoryBase(BaseModel):
+    name: str
+    description: str
+    is_active: bool
+    id_user: int
+
+class Category(CategoryBase):
+    id: int
+    class Config:
+        orm_mode = True
+
+class PaginatedCategory(BaseModel):
+    limit: int
+    offset: int
+    data: List[Category]
