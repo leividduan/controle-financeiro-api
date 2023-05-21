@@ -26,3 +26,12 @@ class Category(Base):
     is_active = Column(Boolean, default=True)
     id_user = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="categories")
+
+class Account(Base):
+    __tablename__ = 'accounts'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(150))
+    is_active = Column(Boolean, default=True)
+    id_user = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user = relationship("User", back_populates="accounts")

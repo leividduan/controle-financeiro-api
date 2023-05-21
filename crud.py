@@ -91,5 +91,42 @@ def delete_category_by_id(db: Session, category_id: int):
 
 # Goals
 
-
 # Report
+
+# Accounts
+def get_all_accounts(db: Session, offset: int, limit: int):
+    return db.query(models.Account).offset(offset).limit(limit).all()
+
+def get_account_by_id(db: Session, account_id: int):
+    db_account = db.query(models.Account).get(account_id)
+    if db_account is None:
+        raise AccountNotFoundError
+    return db_account
+
+def get_account_by_name(db: Session, account_name:str):
+    return db.query(models.Account).filter(models.Account.name == account_name).first()
+
+def create_account(db: Session, account: schemas.AccountBase):
+    db_account = get_account_by_name(db, account.name)
+    if db_account is not None:
+        raise AccountAlreadyExistError
+    db_account = models.Account(**account.dict())
+    db.add(db_account)
+    db.commit()
+    db.refresh(db_account)
+    return db_account
+
+def update_account(db: Session, account_id: int, account: schemas.AccountBase):
+    db_account = get_account_by_id(db, account_id)
+    db_account.name = account.name
+    db_account.is_active = account.is_active
+    db_account.id_user = account.id_user
+    db.commit()
+    db.refresh(db_account)
+    return db_account
+
+def delete_account_by_id(db: Session, account_id: int):
+    db_account = get_account_by_id(db, account_id)
+    db.delete(db_account)
+    db.commit()
+    return

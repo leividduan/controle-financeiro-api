@@ -1,6 +1,7 @@
-from datetime import date
 from typing import List  
 from pydantic import BaseModel
+
+# User
 
 class UserBase(BaseModel):
     name: str
@@ -45,3 +46,14 @@ class PaginatedCategory(BaseModel):
     limit: int
     offset: int
     data: List[Category]
+
+
+# Account
+class AccountBase(BaseModel):
+    name: str
+    is_active: bool
+
+class Account(AccountBase):
+    id: int
+    class Config:
+        orm_mode = True
