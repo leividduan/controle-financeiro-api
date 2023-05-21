@@ -42,3 +42,12 @@ class AccountAlreadyExistError(AccountException):
     def __init__(self):
         self.status_code = 409
         self.detail = "NOME_DUPLICADO"
+
+class TransactionException(Exception):
+    ...
+
+
+class TransactionNotFoundError(TransactionException):
+    def __init__(self):
+        self.status_code = 404
+        self.detail = "TRANSACAO_NAO_ENCONTRADA"

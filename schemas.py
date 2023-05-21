@@ -57,3 +57,14 @@ class Account(AccountBase):
     id: int
     class Config:
         orm_mode = True
+
+# Transaction
+class TransactionBase(BaseModel):
+    title: str
+    description: str
+    value: float
+
+class Transaction(TransactionBase):
+    id: int
+    class Config:
+            orm_mode = True

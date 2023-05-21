@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 
-from exceptions import UserException, CategoryException, AccountException
+from exceptions import UserException, CategoryException, AccountException, TransactionException
 from database import get_db, engine
 from auth.auth_handler import signJWT
 from auth.auth_bearer import JWTBearer
@@ -120,4 +120,33 @@ def delete_account_by_id(account_id: int, db: Session = Depends(get_db)):
     try:
         return crud.delete_account_by_id(db, account_id)
     except AccountException as cie:
+        raise HTTPException(**cie.__dict__)
+    
+# Transactions
+@app.get("/api/transactions/{transaction_id}",  tags=["Transaction"], response_model=schemas.Transaction, dependencies=[Depends(JWTBearer())])
+def get_transaction_by_id(transaction_id: int, db: Session = Depends(get_db)):
+    try:
+        return crud.get_transaction_by_id(db, transaction_id)
+    except TransactionException as cie:
+        raise HTTPException(**cie.__dict__)
+    
+@app.post("/api/transactions", tags=["Transaction"], dependencies=[Depends(JWTBearer())])
+async def create_transaction(transaction: schemas.TransactionBase = Body(...), db: Session= Depends(get_db)):
+    try:
+        return crud.create_transaction(db, transaction)
+    except TransactionException as cie:
+        raise HTTPException(**cie.__dict__)
+
+@app.put("/api/transactions/{transaction_id}", tags=["Transaction"], response_model=schemas.Transaction, dependencies=[Depends(JWTBearer())] )
+def update_transaction(transaction_id: int, transaction: schemas.TransactionBase, db: Session = Depends(get_db)):
+    try:
+        return crud.update_transaction(db, transaction_id, transaction)
+    except TransactionException as cie:
+        raise HTTPException(**cie.__dict__)
+
+@app.delete("/api/transactions/{transaction_id}", tags=["Transaction"], dependencies=[Depends(JWTBearer())] )
+def delete_transaction_by_id(transaction_id: int, db: Session = Depends(get_db)):
+    try:
+        return crud.delete_transaction_by_id(db, transaction_id)
+    except TransactionException as cie:
         raise HTTPException(**cie.__dict__)

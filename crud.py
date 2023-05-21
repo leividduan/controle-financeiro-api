@@ -130,3 +130,41 @@ def delete_account_by_id(db: Session, account_id: int):
     db.delete(db_account)
     db.commit()
     return
+
+# Transaction
+def get_all_transactions(db: Session, offset: int, limit: int):
+    return db.query(models.Transaction).offset(offset).limit(limit).all()
+
+def get_transaction_by_id(db: Session, transaction_id: int):
+    db_transaction = db.query(models.Transaction).get(transaction_id)
+    if db_transaction is None:
+        raise TransactionNotFoundError
+    return db_transaction
+
+def get_transaction_by_name(db: Session, transaction_name:str):
+    return db.query(models.Transaction).filter(models.Transaction.name == transaction_name).first()
+
+def create_transaction(db: Session, transaction: schemas.TransactionBase):
+    db_transaction = get_transaction_by_name(db, transaction.name)
+    if db_transaction is not None:
+        raise TransactionNotFoundError # rever
+    db_transaction = models.Transaction(**transaction.dict())
+    db.add(db_transaction)
+    db.commit()
+    db.refresh(db_transaction)
+    return db_transaction
+
+def update_transaction(db: Session, transaction_id: int, transaction: schemas.TransactionBase):
+    db_transaction = get_transaction_by_id(db, transaction_id)
+    db_transaction.name = transaction.name
+    db_transaction.is_active = transaction.is_active
+    db_transaction.id_user = transaction.id_user
+    db.commit()
+    db.refresh(db_transaction)
+    return db_transaction
+
+def delete_transaction_by_id(db: Session, transaction_id: int):
+    db_transaction = get_transaction_by_id(db, transaction_id)
+    db.delete(db_transaction)
+    db.commit()
+    return

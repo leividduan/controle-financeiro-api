@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum, Date, ForeignKey, Table, Boolean
+from sqlalchemy import Column, Double, Integer, String, Enum, Date, ForeignKey, Table, Boolean
 from sqlalchemy.orm import relationship
 from database import Base
 import enum
@@ -35,3 +35,15 @@ class Account(Base):
     is_active = Column(Boolean, default=True)
     id_user = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="accounts")
+
+class Transaction(Base):
+    __tablename__ = 'transactions'
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(150))
+    description = Column(String(150))
+    value = Column(Double)
+    type = Column('type', Enum(Types))
+    id_category = Column(Integer, ForeignKey("categories.id"), nullable=False)
+    id_account = Column(Integer, ForeignKey("accounts.id"), nullable=False)
+    category = relationship("Category", back_populates="transactions")
+    account = relationship("Account", back_populates="transactions")
