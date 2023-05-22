@@ -17,14 +17,15 @@ app = FastAPI()
 async def create_user_signup(user: schemas.UserCreate = Body(...), db: Session= Depends(get_db)):
     try:
         crud.create_user(db, user)
-        return signJWT(user.email)
+        return signJWT(user.id)
     except UserException as cie:
         raise HTTPException(**cie.__dict__)
     
 @app.post("/api/users/login", tags=["User"])
 async def user_login(user: schemas.UserLoginSchema = Body(...), db: Session= Depends(get_db)):
     if crud.check_user(db, user):
-        return signJWT(user.email)
+        loggedUser = crud.get_user_by_email(db, user.email)
+        return signJWT(loggedUser.id)
     return {
         "error": "E-mail ou senha incorretos!"
     }
@@ -94,6 +95,13 @@ def delete_category_by_id(category_id: int, db: Session = Depends(get_db)):
         raise HTTPException(**cie.__dict__)
 
 # Accounts
+
+@app.get("/api/accounts", tags=["Account"], response_model=schemas.PaginatedAccount, dependencies=[Depends(JWTBearer())])
+def get_all_accounts(db: Session = Depends(get_db), offset: int = 0, limit: int = 10):
+    db_categories = crud.get_all_accounts(db, offset, limit)
+    response = {"limit": limit, "offset": offset, "data": db_categories}
+    return response
+
 @app.get("/api/accounts/{account_id}",  tags=["Account"], response_model=schemas.Account, dependencies=[Depends(JWTBearer())])
 def get_account_by_id(account_id: int, db: Session = Depends(get_db)):
     try:
@@ -123,6 +131,13 @@ def delete_account_by_id(account_id: int, db: Session = Depends(get_db)):
         raise HTTPException(**cie.__dict__)
     
 # Transactions
+
+@app.get("/api/transactions", tags=["Transaction"], response_model=schemas.PaginatedTransaction, dependencies=[Depends(JWTBearer())])
+def get_all_transactions(db: Session = Depends(get_db), offset: int = 0, limit: int = 10):
+    db_categories = crud.get_all_transactions(db, offset, limit)
+    response = {"limit": limit, "offset": offset, "data": db_categories}
+    return response
+
 @app.get("/api/transactions/{transaction_id}",  tags=["Transaction"], response_model=schemas.Transaction, dependencies=[Depends(JWTBearer())])
 def get_transaction_by_id(transaction_id: int, db: Session = Depends(get_db)):
     try:
@@ -177,7 +192,7 @@ async def create_goals(Goals: schemas.GoalsBase = Body(...), db: Session= Depend
 @app.put("/api/goals/{goals_id}", tags=["Goals"], response_model=schemas.Goals, dependencies=[Depends(JWTBearer())] )
 def update_goals(goals_id: int, Goals: schemas.GoalsBase, db: Session = Depends(get_db)):
     try:
-        return crud.update_category(db, goals_id, Goals)
+        return crud.update_goals(db, goals_id, Goals)
     except GoalsException as cie:
         raise HTTPException(**cie.__dict__)
 

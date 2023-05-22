@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "controle_financeiro",
-    "dateExported": "2023-05-18T22:15:02.491Z",
+    "dateExported": "2023-05-22T22:50:43.113Z",
     "version": "1.1",
     "folders": [
         {
@@ -17,6 +17,27 @@
             "containerId": "",
             "created": "2023-05-18T22:01:05.716Z",
             "sortNum": 20000
+        },
+        {
+            "_id": "fe76fc5f-3b94-44be-8cfc-4b7add9a3327",
+            "name": "accounts",
+            "containerId": "",
+            "created": "2023-05-22T21:48:55.182Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "57f5f2a3-caa7-4041-a577-08ec2c37ffa1",
+            "name": "goals",
+            "containerId": "",
+            "created": "2023-05-22T21:55:31.560Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "61faee8f-97d2-45cd-8158-cb2a65652b04",
+            "name": "transactions",
+            "containerId": "",
+            "created": "2023-05-22T22:19:39.514Z",
+            "sortNum": 50000
         }
     ],
     "requests": [
@@ -54,6 +75,48 @@
             "tests": []
         },
         {
+            "_id": "a0238710-43e6-44fe-b4dc-f0849897c9fe",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "fe76fc5f-3b94-44be-8cfc-4b7add9a3327",
+            "name": "get",
+            "url": "/api/accounts",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-05-22T21:48:55.182Z",
+            "modified": "2023-05-22T21:51:05.535Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5ba6f44d-a379-43df-8452-aa0b22d3bc86",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "57f5f2a3-caa7-4041-a577-08ec2c37ffa1",
+            "name": "get",
+            "url": "/api/goals",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-05-22T21:55:31.560Z",
+            "modified": "2023-05-22T21:56:07.215Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "277d34a8-fcc8-43d5-a628-570a033aab54",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "61faee8f-97d2-45cd-8158-cb2a65652b04",
+            "name": "get",
+            "url": "/api/transactions",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-05-22T22:19:39.514Z",
+            "modified": "2023-05-22T22:20:00.353Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
             "_id": "c20f21d9-08c6-457a-971c-17b358b53ac0",
             "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
             "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
@@ -62,12 +125,69 @@
             "method": "POST",
             "sortNum": 35000,
             "created": "2023-05-18T22:01:49.626Z",
-            "modified": "2023-05-18T22:14:06.197Z",
+            "modified": "2023-05-22T22:11:19.926Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"categoria legal\",\n  \"description\": \"essa é realmente mt massa\",\n  \"is_active\": true,\n  \"id_user\": 1\n}",
+                "raw": "{\n  \"name\": \"streaming\",\n  \"description\": \"essa é realmente mt massa\",\n  \"is_active\": true,\n  \"id_user\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e99839fd-7671-42eb-bd60-e3b7175a6d2f",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "fe76fc5f-3b94-44be-8cfc-4b7add9a3327",
+            "name": "post",
+            "url": "/api/accounts",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2023-05-22T21:48:55.184Z",
+            "modified": "2023-05-22T21:54:12.257Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Banco brasil\",\n  \"is_active\": true,\n  \"id_user\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f6108d8a-8cbf-48d1-a15b-c58fadef9b56",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "57f5f2a3-caa7-4041-a577-08ec2c37ffa1",
+            "name": "post",
+            "url": "/api/goals",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2023-05-22T21:55:31.561Z",
+            "modified": "2023-05-22T22:13:21.573Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Streaming\",\n  \"is_active\": true,\n  \"id_user\": 1,\n  \"id_category\": 2\n}\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "10eea77b-8c41-4856-ab2b-987ef18562f2",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "61faee8f-97d2-45cd-8158-cb2a65652b04",
+            "name": "post",
+            "url": "/api/transactions",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2023-05-22T22:19:39.515Z",
+            "modified": "2023-05-22T22:47:55.055Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"DisneyPlus 2\",\n  \"description\": \"gasto na disney plus\",\n  \"value\": 50,\n  \"type\": \"EXPENSE\",\n  \"id_category\": 2,\n  \"id_account\": 2\n}",
                 "form": []
             },
             "tests": []
@@ -106,6 +226,48 @@
             "tests": []
         },
         {
+            "_id": "b618e804-be3e-42c2-a093-f7ce17a76a4b",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "fe76fc5f-3b94-44be-8cfc-4b7add9a3327",
+            "name": "get by id",
+            "url": "/api/accounts/1",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-05-22T21:48:55.185Z",
+            "modified": "2023-05-22T21:51:03.713Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "dda9158a-0329-4550-8ed5-01d0bcaeaf34",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "57f5f2a3-caa7-4041-a577-08ec2c37ffa1",
+            "name": "get by id",
+            "url": "/api/goals/1",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-05-22T21:55:31.562Z",
+            "modified": "2023-05-22T21:56:05.830Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ac863477-f6d3-4906-b1d1-363cbd543209",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "61faee8f-97d2-45cd-8158-cb2a65652b04",
+            "name": "get by id",
+            "url": "/api/transactions/1",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-05-22T22:19:39.516Z",
+            "modified": "2023-05-22T22:20:06.556Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
             "_id": "6854f42c-ccad-4730-91e1-9cf8d5dae88a",
             "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
             "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
@@ -125,6 +287,63 @@
             "tests": []
         },
         {
+            "_id": "e0367da3-2abf-4707-b02c-cdd7f1f9be7f",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "fe76fc5f-3b94-44be-8cfc-4b7add9a3327",
+            "name": "put",
+            "url": "/api/accounts/1",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-05-22T21:48:55.186Z",
+            "modified": "2023-05-22T21:55:04.934Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Banco brasil - editado\",\n  \"is_active\": true,\n  \"id\": 1,\n  \"id_user\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "55df8b73-fc9a-47b4-bf79-de61648281d5",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "57f5f2a3-caa7-4041-a577-08ec2c37ffa1",
+            "name": "put",
+            "url": "/api/goals/1",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-05-22T21:55:31.563Z",
+            "modified": "2023-05-22T22:13:34.478Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Streaming - editado\",\n  \"is_active\": true,\n  \"id_user\": 1,\n  \"id_category\": 2\n}\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "39e3f4b3-bace-4836-932a-61fb00e10306",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "61faee8f-97d2-45cd-8158-cb2a65652b04",
+            "name": "put",
+            "url": "/api/transactions/1",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-05-22T22:19:39.517Z",
+            "modified": "2023-05-22T22:43:21.200Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": 1,\n  \"value\": 50.0,\n  \"id_category\": 2,\n  \"title\": \"DisneyPlus - editado1\",\n  \"description\": \"gasto na disney plus\",\n  \"type\": \"EXPENSE\",\n  \"id_account\": 2\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
             "_id": "1abb1bbf-d747-4b3f-b5dd-534da9bfda9b",
             "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
             "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
@@ -137,12 +356,54 @@
             "headers": [],
             "params": [],
             "tests": []
+        },
+        {
+            "_id": "6c53800c-5276-4170-8016-4cccba47a959",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "fe76fc5f-3b94-44be-8cfc-4b7add9a3327",
+            "name": "delete",
+            "url": "/api/accounts/1",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-05-22T21:48:55.187Z",
+            "modified": "2023-05-22T21:51:01.750Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "73ab2bfe-ba72-4a48-8282-ccad1cc4e838",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "57f5f2a3-caa7-4041-a577-08ec2c37ffa1",
+            "name": "delete",
+            "url": "/api/goals/1",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-05-22T21:55:31.564Z",
+            "modified": "2023-05-22T21:56:04.155Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a72f9b5e-36a0-4c46-a5a0-f06d33665462",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "61faee8f-97d2-45cd-8158-cb2a65652b04",
+            "name": "delete",
+            "url": "/api/transactions/1",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-05-22T22:19:39.518Z",
+            "modified": "2023-05-22T22:20:13.402Z",
+            "headers": [],
+            "params": [],
+            "tests": []
         }
     ],
     "settings": {
         "auth": {
             "type": "bearer",
-            "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVpdmlkLmNhcmRvc0BnbWFpbC5jb20iLCJleHBpcmVzIjoxNjg0NDQ4NTk5Ljg5NzM5NX0.Vc4YNZTYU-w6kQ2aMXLUKZwRFDqd8bT1pSSz-uyRzFI"
+            "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVpdmlkLmNhcmRvc0BnbWFpbC5jb20iLCJleHBpcmVzIjoxNjg0NzkyNjgzLjQ0Mjc4Mn0.8rTvsfcsy-zIHED4Ag6D8re7jDDCGbDROQAEPoKPVJY"
         },
         "options": {
             "baseUrl": "http://127.0.0.1:8000"

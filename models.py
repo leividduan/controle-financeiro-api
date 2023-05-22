@@ -15,6 +15,8 @@ class User(Base):
     email = Column(String(150), unique=True, index=True)
     password = Column(String(255))
     categories = relationship("Category", back_populates="user")
+    goals = relationship("Goals", back_populates="user")
+    accounts = relationship("Account", back_populates="user")
 
 class Category(Base):
     __tablename__ = 'categories'
@@ -26,6 +28,8 @@ class Category(Base):
     is_active = Column(Boolean, default=True)
     id_user = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="categories")
+    goals = relationship("Goals", back_populates="category")
+    transactions = relationship("Transaction", back_populates="category")
 
 class Goals(Base):
     __tablename__ = 'goals'
@@ -46,6 +50,8 @@ class Account(Base):
     is_active = Column(Boolean, default=True)
     id_user = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="accounts")
+    transactions = relationship("Transaction", back_populates="account")
+
 
 class Transaction(Base):
     __tablename__ = 'transactions'

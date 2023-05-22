@@ -1,5 +1,10 @@
 from typing import List  
 from pydantic import BaseModel
+import enum
+
+class Types(str, enum.Enum):
+    income = "income"
+    expense = "expense"
 
 # User
 
@@ -52,27 +57,41 @@ class PaginatedCategory(BaseModel):
 class AccountBase(BaseModel):
     name: str
     is_active: bool
+    id_user: int
 
 class Account(AccountBase):
     id: int
     class Config:
         orm_mode = True
 
+class PaginatedAccount(BaseModel):
+    limit: int
+    offset: int
+    data: List[Account]
+
 # Transaction
 class TransactionBase(BaseModel):
     title: str
     description: str
     value: float
+    type: enum.Enum
+    id_category: int
+    id_account: int
 
 class Transaction(TransactionBase):
     id: int
     class Config:
             orm_mode = True
 
+            
+class PaginatedTransaction(BaseModel):
+    limit: int
+    offset: int
+    data: List[Transaction]
+
 # Goals
 class GoalsBase(BaseModel):
     name: str
-    description: str
     is_active: bool
     id_user: int
     id_category: int

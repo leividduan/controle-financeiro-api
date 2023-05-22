@@ -116,12 +116,12 @@ def create_goals(db: Session, Goals: schemas.GoalsBase):
 def update_goals(db: Session, Goals_id: int, Goals: schemas.GoalsBase):
     db_goals = get_goals_by_id(db, Goals_id)
     db_goals.name = Goals.name
-    db_goals.description = Goals.description
     db_goals.is_active = Goals.is_active
     db_goals.id_user = Goals.id_user
     db.commit()
     db.refresh(db_goals)
     return db_goals
+
 def delete_goals_by_id(db: Session, Goals_id: int):
     db_goals = get_goals_by_id(db, Goals_id)
     db.delete(db_goals)
@@ -176,13 +176,13 @@ def get_transaction_by_id(db: Session, transaction_id: int):
         raise TransactionNotFoundError
     return db_transaction
 
-def get_transaction_by_name(db: Session, transaction_name:str):
-    return db.query(models.Transaction).filter(models.Transaction.name == transaction_name).first()
+def get_transaction_by_title(db: Session, transaction_title:str):
+    return db.query(models.Transaction).filter(models.Transaction.title == transaction_title).first()
 
 def create_transaction(db: Session, transaction: schemas.TransactionBase):
-    db_transaction = get_transaction_by_name(db, transaction.name)
+    db_transaction = get_transaction_by_title(db, transaction.title)
     if db_transaction is not None:
-        raise TransactionNotFoundError # rever
+        raise TransactionNotFoundError
     db_transaction = models.Transaction(**transaction.dict())
     db.add(db_transaction)
     db.commit()
@@ -191,9 +191,12 @@ def create_transaction(db: Session, transaction: schemas.TransactionBase):
 
 def update_transaction(db: Session, transaction_id: int, transaction: schemas.TransactionBase):
     db_transaction = get_transaction_by_id(db, transaction_id)
-    db_transaction.name = transaction.name
-    db_transaction.is_active = transaction.is_active
-    db_transaction.id_user = transaction.id_user
+    db_transaction.title = transaction.title
+    db_transaction.description = transaction.description
+    db_transaction.value = transaction.value
+    db_transaction.type = transaction.type
+    db_transaction.id_category = transaction.id_category
+    db_transaction.id_account = transaction.id_account
     db.commit()
     db.refresh(db_transaction)
     return db_transaction
