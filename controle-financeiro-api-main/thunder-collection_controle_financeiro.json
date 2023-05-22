@@ -1,0 +1,151 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "controle_financeiro",
+    "dateExported": "2023-05-18T22:15:02.491Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "9c033955-387f-4410-babe-0c785cff0925",
+            "name": "users",
+            "containerId": "",
+            "created": "2023-05-18T22:00:57.458Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
+            "name": "categories",
+            "containerId": "",
+            "created": "2023-05-18T22:01:05.716Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "014fccda-ab7c-4152-95e1-26f47f4f88fc",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "9c033955-387f-4410-babe-0c785cff0925",
+            "name": "signup",
+            "url": "/api/users/signup",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-05-18T21:56:57.142Z",
+            "modified": "2023-05-18T22:00:59.670Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"deivid\",\n  \"email\": \"deivid.cardos@gmail.com\",\n  \"password\": \"teste#123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "63d29eee-0b36-4735-a5e7-624afac1a689",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
+            "name": "get",
+            "url": "/api/categories",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-05-18T22:01:11.160Z",
+            "modified": "2023-05-18T22:01:28.194Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c20f21d9-08c6-457a-971c-17b358b53ac0",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
+            "name": "post",
+            "url": "/api/categories",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2023-05-18T22:01:49.626Z",
+            "modified": "2023-05-18T22:14:06.197Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"categoria legal\",\n  \"description\": \"essa é realmente mt massa\",\n  \"is_active\": true,\n  \"id_user\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0125173e-8cb4-41db-a004-52f318bc44ea",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
+            "name": "get by id",
+            "url": "/api/categories/1",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-05-18T22:01:31.719Z",
+            "modified": "2023-05-18T22:02:32.716Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a708ff5e-9458-40de-a247-f14aef324ccd",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "9c033955-387f-4410-babe-0c785cff0925",
+            "name": "login",
+            "url": "/api/users/login",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-05-18T22:04:54.110Z",
+            "modified": "2023-05-18T22:05:26.754Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"deivid.cardos@gmail.com\",\n  \"password\": \"teste#123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6854f42c-ccad-4730-91e1-9cf8d5dae88a",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
+            "name": "put",
+            "url": "/api/categories/1",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-05-18T22:03:00.283Z",
+            "modified": "2023-05-18T22:14:04.901Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"categoria legal - editada\",\n  \"description\": \"essa é realmente mt massa\",\n  \"is_active\": true,\n  \"id_user\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "1abb1bbf-d747-4b3f-b5dd-534da9bfda9b",
+            "colId": "b901aad5-dc49-423b-82b1-a520f8d2297c",
+            "containerId": "c23ce9ee-b02f-4016-beaf-9b2d3ce779f6",
+            "name": "delete",
+            "url": "/api/categories/1",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-05-18T22:03:46.319Z",
+            "modified": "2023-05-18T22:04:19.913Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "auth": {
+            "type": "bearer",
+            "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVpdmlkLmNhcmRvc0BnbWFpbC5jb20iLCJleHBpcmVzIjoxNjg0NDQ4NTk5Ljg5NzM5NX0.Vc4YNZTYU-w6kQ2aMXLUKZwRFDqd8bT1pSSz-uyRzFI"
+        },
+        "options": {
+            "baseUrl": "http://127.0.0.1:8000"
+        }
+    }
+}
