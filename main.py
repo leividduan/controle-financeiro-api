@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 
-from exceptions import UserException, CategoryException, AccountException, TransactionException
+from exceptions import *
 from database import get_db, engine
 from auth.auth_handler import signJWT
 from auth.auth_bearer import JWTBearer
@@ -150,3 +150,40 @@ def delete_transaction_by_id(transaction_id: int, db: Session = Depends(get_db))
         return crud.delete_transaction_by_id(db, transaction_id)
     except TransactionException as cie:
         raise HTTPException(**cie.__dict__)
+    
+#Goals
+
+@app.get("/api/goals", tags=["Goals"], response_model=schemas.PaginatedGoals, dependencies=[Depends(JWTBearer())])
+def get_all_goals(db: Session = Depends(get_db), offset: int = 0, limit: int = 10):
+    db_goals = crud.get_all_goals(db, offset, limit)
+    response = {"limit": limit, "offset": offset, "data": db_goals}
+    return response
+
+
+@app.get("/api/goals/{goals_id}",  tags=["Goals"], response_model=schemas.Goals, dependencies=[Depends(JWTBearer())])
+def get_goals_by_id(goals_id: int, db: Session = Depends(get_db)):
+    try:
+        return crud.get_goals_by_id(db, goals_id)
+    except GoalsException as cie:
+        raise HTTPException(**cie.__dict__)
+    
+@app.post("/api/goals", tags=["Goals"], dependencies=[Depends(JWTBearer())])
+async def create_goals(Goals: schemas.GoalsBase = Body(...), db: Session= Depends(get_db)):
+    try:
+        return crud.create_goals(db, Goals)
+    except GoalsException as cie:
+        raise HTTPException(**cie.__dict__)
+
+@app.put("/api/goals/{goals_id}", tags=["Goals"], response_model=schemas.Goals, dependencies=[Depends(JWTBearer())] )
+def update_goals(goals_id: int, Goals: schemas.GoalsBase, db: Session = Depends(get_db)):
+    try:
+        return crud.update_category(db, goals_id, Goals)
+    except GoalsException as cie:
+        raise HTTPException(**cie.__dict__)
+
+@app.delete("/api/goals/{goals_id}", tags=["Goals"], dependencies=[Depends(JWTBearer())] )
+def delete_goals_by_id(goals_id: int, db: Session = Depends(get_db)):
+    try:
+        return crud.delete_goals_by_id(db, goals_id)
+    except GoalsException as cie:
+        raise HTTPException(**cie.__dict__)    

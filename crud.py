@@ -91,7 +91,42 @@ def delete_category_by_id(db: Session, category_id: int):
 
 # Goals
 
-# Report
+def get_all_goals(db: Session, offset: int, limit: int):
+    return db.query(models.Goals).offset(offset).limit(limit).all()
+
+def get_goals_by_id(db: Session, Goals_id: int):
+    db_goals = db.query(models.Goals).get(Goals_id)
+    if db_goals is None:
+        raise GoalsNotFoundError
+    return db_goals
+
+def get_goals_by_name(db: Session, Goals_name: str):
+    return db.query(models.Goals).filter(models.Goals.name == Goals_name).first()
+
+def create_goals(db: Session, Goals: schemas.GoalsBase):
+    db_goals = get_goals_by_name(db, Goals.name)
+    if db_goals is not None:
+        raise GoalsAlreadyExistError
+    db_goals = models.Goals(**Goals.dict())
+    db.add(db_goals)
+    db.commit()
+    db.refresh(db_goals)
+    return db_goals
+
+def update_goals(db: Session, Goals_id: int, Goals: schemas.GoalsBase):
+    db_goals = get_goals_by_id(db, Goals_id)
+    db_goals.name = Goals.name
+    db_goals.description = Goals.description
+    db_goals.is_active = Goals.is_active
+    db_goals.id_user = Goals.id_user
+    db.commit()
+    db.refresh(db_goals)
+    return db_goals
+def delete_goals_by_id(db: Session, Goals_id: int):
+    db_goals = get_goals_by_id(db, Goals_id)
+    db.delete(db_goals)
+    db.commit()
+    return
 
 # Accounts
 def get_all_accounts(db: Session, offset: int, limit: int):

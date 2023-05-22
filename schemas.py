@@ -68,3 +68,21 @@ class Transaction(TransactionBase):
     id: int
     class Config:
             orm_mode = True
+
+# Goals
+class GoalsBase(BaseModel):
+    name: str
+    description: str
+    is_active: bool
+    id_user: int
+    id_category: int
+
+class Goals(GoalsBase):
+    id: int
+    class Config:
+        orm_mode = True
+
+class PaginatedGoals(BaseModel):
+    limit: int
+    offset: int
+    data: List[Goals]
