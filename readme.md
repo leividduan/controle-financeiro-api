@@ -11,6 +11,7 @@ Para rodar o projeto é necessário instalar as seguintes dependências.
 - pip install cryptography
 - pip install bcrypt
 - pip install PyJWT python-decouple
+- pip install pymysql
 
 Além disso precisa ajustar o caminho do banco de dados dentro do arquivo database.py e adicionar um arquivo .env na raiz do projeto. Dentro do arquivo .env você precisa por uma chave aleatória e um tipo de algoritmo de criptografia. Ex:
 
