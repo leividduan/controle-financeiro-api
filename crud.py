@@ -6,7 +6,7 @@ import bcrypt, models, schemas
 def check_user(db: Session, user: schemas.UserLoginSchema):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user is None:
-        return False
+        raise UserNotFoundError
     return bcrypt.checkpw(user.password.encode('utf8'), db_user.password.encode('utf8'))
 
 def get_user_by_id(db: Session, user_id: int):

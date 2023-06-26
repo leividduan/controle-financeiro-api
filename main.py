@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, Body
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from exceptions import *
@@ -11,24 +12,36 @@ import crud, models, schemas
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # User
 
 @app.post("/api/users/signup", tags=["User"])
 async def create_user_signup(user: schemas.UserCreate = Body(...), db: Session= Depends(get_db)):
     try:
         new_user = crud.create_user(db, user)
-        return signJWT(new_user.id)
+        return signJWT(new_user.id, new_user.name)
     except UserException as cie:
         raise HTTPException(**cie.__dict__)
     
 @app.post("/api/users/login", tags=["User"])
 async def user_login(user: schemas.UserLoginSchema = Body(...), db: Session= Depends(get_db)):
-    if crud.check_user(db, user):
-        loggedUser = crud.get_user_by_email(db, user.email)
-        return signJWT(loggedUser.id)
-    return {
-        "error": "E-mail ou senha incorretos!"
-    }
+    try:
+        if crud.check_user(db, user):
+            loggedUser = crud.get_user_by_email(db, user.email)
+            return signJWT(loggedUser.id, loggedUser.name)
+    except UserException as cie:
+        raise HTTPException(**cie.__dict__)
 
 @app.get("/api/users/{user_id}",  tags=["User"], response_model=schemas.User, dependencies=[Depends(JWTBearer())])
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
