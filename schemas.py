@@ -39,6 +39,7 @@ class PaginatedUser(BaseModel):
 class CategoryBase(BaseModel):
     name: str
     description: str
+    type: str
     is_active: bool
     id_user: int
 
@@ -74,7 +75,6 @@ class TransactionBase(BaseModel):
     title: str
     description: str
     value: float
-    type: enum.Enum
     id_category: int
     id_account: int
 

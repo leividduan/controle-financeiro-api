@@ -194,7 +194,6 @@ def update_transaction(db: Session, transaction_id: int, transaction: schemas.Tr
     db_transaction.title = transaction.title
     db_transaction.description = transaction.description
     db_transaction.value = transaction.value
-    db_transaction.type = transaction.type
     db_transaction.id_category = transaction.id_category
     db_transaction.id_account = transaction.id_account
     db.commit()
